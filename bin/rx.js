@@ -17,7 +17,7 @@ const server = net.createServer((socket) => {
 		.pipe(outStream);
 });
 
-// Grab an arbitrary unused port.
 server.listen(8080, () => {
+	console.log("Listening on port 8080")
 });
 
