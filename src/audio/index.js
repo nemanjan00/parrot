@@ -6,6 +6,7 @@ const { OpusEncoder } = require("@discordjs/opus");
 const samplerate = 48000;
 
 const encoder = new OpusEncoder(48000, 1);
+encoder.setBitrate(24000);
 
 module.exports = {
 	listDevices: () => {
@@ -98,4 +99,3 @@ module.exports = {
 		});
 	}
 };
-
