@@ -37,7 +37,7 @@ module.exports = (serial) => {
 
 		endTransmit: () => {
 			return serial.set({
-				dtr: true
+				dtr: false
 			});
 		}
 	};
