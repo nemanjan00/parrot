@@ -1,0 +1,10 @@
+PID 317943 received SIGSEGV for address: 0xaa65
+/home/nemanjan00/parrot/node_modules/segfault-handler/build/Release/segfault-handler.node(+0x327d)[0x6433d607f27d]
+/usr/lib/libc.so.6(+0x38a00)[0x6433d5b69a00]
+/home/nemanjan00/.asdf/installs/nodejs/16.18.1/bin/node(napi_delete_reference+0x16)[0xabc036]
+/home/nemanjan00/parrot/node_modules/@discordjs/opus/prebuild/node-v93-napi-v3-linux-x64-glibc-2.36/opus.node(_ZN11OpusEncoder6EncodeERKN4Napi12CallbackInfoE+0x989)[0x6433d40ef779]
+/home/nemanjan00/parrot/node_modules/@discordjs/opus/prebuild/node-v93-napi-v3-linux-x64-glibc-2.36/opus.node(_ZN4Napi12InstanceWrapI11OpusEncoderE29InstanceMethodCallbackWrapperEP10napi_env__P20napi_callback_info__+0xfc)[0x6433d40e81ac]
+/home/nemanjan00/.asdf/installs/nodejs/16.18.1/bin/node[0xab3e7d]
+/home/nemanjan00/.asdf/installs/nodejs/16.18.1/bin/node[0xd3e3ce]
+/home/nemanjan00/.asdf/installs/nodejs/16.18.1/bin/node(_ZN2v88internal21Builtin_HandleApiCallEiPmPNS0_7IsolateE+0xaf)[0xd3f7ef]
+/home/nemanjan00/.asdf/installs/nodejs/16.18.1/bin/node[0x15da239]
