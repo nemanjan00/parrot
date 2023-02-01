@@ -1,7 +1,7 @@
 {
   "name": "parrot",
   "version": "0.0.0",
-  "description": "Replay audio heard on one of connected machines",
+  "description": "Parrot for network of radios",
   "main": "index.js",
   "repository": "git@github.com:nemanjan00/parrot.git",
   "author": "nemanjan00 <nemanjan00@gmail.com>",
