@@ -13,15 +13,15 @@ module.exports = (serial) => {
 				// DSR - SQL
 				// DTR - TX
 
-				const status = serial.get();
+				serial.get((_error, status) => {
+					if(status.dsr && !motorola._status.dsr) {
+						motorola._events.emit("rx");
+					}
 
-				if(status.dsr && !motorola._status.dsr) {
-					motorola._events.emit("rx");
-				}
-
-				if(!status.dsr && motorola._status.dsr) {
-					motorola._events.emit("rx_end");
-				}
+					if(!status.dsr && motorola._status.dsr) {
+						motorola._events.emit("rx_end");
+					}
+				});
 			}, 10);
 		},
 
