@@ -17,7 +17,6 @@ module.exports = {
 		return portAudio.AudioIO({
 			inOptions: {
 				channelCount: 1,
-				channelCount: 1,
 				sampleFormat: portAudio.SampleFormat16Bit,
 				sampleRate: samplerate,
 				deviceId: device.id,
@@ -32,7 +31,6 @@ module.exports = {
 				sampleFormat: portAudio.SampleFormat16Bit,
 				sampleRate: samplerate,
 				deviceId: device.id,
-				closeOnError: false
 			}
 		});
 	},

@@ -38,7 +38,7 @@ module.exports = (serialport) => {
 				});
 			}).then(() => {
 				console.log(123);
-				setInterval(ic9700._waitForRx, 10);
+				setInterval(ic9700._waitForRx, 100);
 			});
 		},
 

@@ -16,3 +16,11 @@ ic9700.on("rx", () => {
 ic9700.on("rx_end", () => {
 	console.log("rx_end");
 });
+
+ic9700.run("1A05011503").then(response => {
+	console.log(response)
+});
+
+ic9700.run("1A050115").then(response => {
+	console.log(response)
+});
