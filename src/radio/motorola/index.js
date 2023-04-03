@@ -9,18 +9,27 @@ module.exports = (serial) => {
 		_timer: undefined,
 
 		_init: () => {
+			let open = false;
+
 			motorola._timer = setInterval(() => {
 				// DSR - SQL
 				// DTR - TX
 
+				if(serial.opening === false && open === false) {
+					motorola.endTransmit();
+					open = true;
+				}
+
 				serial.get((_error, status) => {
-					if(status.dsr && !motorola._status.dsr) {
+					if(!status.dsr && motorola._status.dsr) {
 						motorola._events.emit("rx");
 					}
 
-					if(!status.dsr && motorola._status.dsr) {
+					if(status.dsr && !motorola._status.dsr) {
 						motorola._events.emit("rx_end");
 					}
+
+					motorola._status = status;
 				});
 			}, 10);
 		},
