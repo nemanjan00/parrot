@@ -24,7 +24,7 @@ const debounce = (callback, timeout) => {
 		lastCall = Date.now();
 
 		setTimeout(() => {
-			if(lastCall + timeout < Date.now()) {
+			if(lastCall + timeout <= Date.now()) {
 				callback(...args);
 			}
 		}, timeout);
