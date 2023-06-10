@@ -17,11 +17,34 @@ const serialport = new SerialPort({
 
 const ic9700 = ic9700radio(serialport);
 
+const debounce = (callback, timeout) => {
+	let lastCall;
+
+	return (...args) => {
+		lastCall = Date.now();
+
+		setTimeout(() => {
+			console.log(123);
+			if(lastCall + timeout < Date.now()) {
+				callback(...args);
+			}
+		}, timeout);
+	};
+};
+
 let stream = undefined;
 
 let buffer = [];
 
+let listening = false;
+
 ic9700.on("rx", () => {
+	if(listening == true) {
+		return;
+	}
+
+	listening = true;
+
 	stream = audio.record(device);
 	stream.on("data", (data) => {
 		buffer.push(data);
@@ -32,7 +55,9 @@ ic9700.on("rx", () => {
 	console.log("rx");
 });
 
-ic9700.on("rx_end", () => {
+ic9700.on("rx_end", debounce(() => {
+	listening = false;
+
 	stream.quit();
 
 	const outStream = audio.play(device);
@@ -72,7 +97,7 @@ ic9700.on("rx_end", () => {
 	}, 100);
 
 	console.log("rx_end");
-});
+}, 1000));
 
 ic9700.run("1A05011503").then(response => {
 	console.log(response)
