@@ -21,6 +21,8 @@ module.exports = (serial) => {
 				}
 
 				serial.get((_error, status) => {
+					console.log(status);
+
 					if(!status.dsr && motorola._status.dsr) {
 						motorola._events.emit("rx");
 					}
@@ -46,7 +48,8 @@ module.exports = (serial) => {
 
 		endTransmit: () => {
 			return serial.set({
-				dtr: false
+				dtr: false,
+				cts: false
 			});
 		}
 	};
