@@ -37,7 +37,6 @@ module.exports = (serialport) => {
 					return resolve();
 				});
 			}).then(() => {
-				console.log(123);
 				setInterval(ic9700._waitForRx, 100);
 			});
 		},
@@ -160,6 +159,13 @@ module.exports = (serialport) => {
 
 		endTransmit: () => {
 			return ic9700.run("1C0000");
+		},
+
+		setup: () => {
+			return Promise.all([
+				ic9700.run("1A05011503"),
+				ic9700.run("1A050115")
+			]);
 		}
 	};
 

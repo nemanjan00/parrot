@@ -1,7 +1,7 @@
 const SerialPort = require("serialport").SerialPort;
 const { Readable } = require('stream');
 
-const ic9700radio = require("../src/radio/ic9700");
+const radioController = require("../src/radio/ic9700");
 
 const audio = require("../src/audio");
 const {read} = require("fs");
@@ -15,7 +15,7 @@ const serialport = new SerialPort({
 	baudRate: 9600
 });
 
-const ic9700 = ic9700radio(serialport);
+const radio = radioController(serialport);
 
 const debounce = (callback, timeout) => {
 	let lastCall;
@@ -24,7 +24,6 @@ const debounce = (callback, timeout) => {
 		lastCall = Date.now();
 
 		setTimeout(() => {
-			console.log(123);
 			if(lastCall + timeout < Date.now()) {
 				callback(...args);
 			}
@@ -38,7 +37,7 @@ let buffer = [];
 
 let listening = false;
 
-ic9700.on("rx", () => {
+radio.on("rx", () => {
 	if(listening == true) {
 		return;
 	}
@@ -55,7 +54,7 @@ ic9700.on("rx", () => {
 	console.log("rx");
 });
 
-ic9700.on("rx_end", debounce(() => {
+radio.on("rx_end", debounce(() => {
 	listening = false;
 
 	stream.quit();
@@ -82,16 +81,16 @@ ic9700.on("rx_end", debounce(() => {
 	buffer = [];
 
 	setTimeout(() => {
-		ic9700.transmit().then(() => {
+		radio.transmit().then(() => {
 			if(outStream._writableState.finished) {
-				ic9700.endTransmit();
+				radio.endTransmit();
 				return;
 			}
 
 			outStream.start();
 
 			outStream.on("finished", () => {
-				ic9700.endTransmit();
+				radio.endTransmit();
 			});
 		});
 	}, 100);
@@ -99,11 +98,4 @@ ic9700.on("rx_end", debounce(() => {
 	console.log("rx_end");
 }, 1000));
 
-ic9700.run("1A05011503").then(response => {
-	console.log(response)
-});
-
-ic9700.run("1A050115").then(response => {
-	console.log(response)
-});
-
+radio.setup();

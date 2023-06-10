@@ -51,7 +51,9 @@ module.exports = (serial) => {
 				dtr: false,
 				cts: false
 			});
-		}
+		},
+
+		setup: () => Promise.resolve()
 	};
 
 	motorola._init();
