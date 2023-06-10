@@ -58,6 +58,11 @@ ic9700.on("rx_end", () => {
 
 	setTimeout(() => {
 		ic9700.transmit().then(() => {
+			if(outStream._writableState.finished) {
+				ic9700.endTransmit();
+				return;
+			}
+
 			outStream.start();
 
 			outStream.on("finished", () => {
