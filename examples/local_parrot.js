@@ -1,5 +1,6 @@
 const SerialPort = require("serialport").SerialPort;
 const { Readable } = require('stream');
+const uuid = require("uuid").v4;
 
 const radioController = require("../src/radio/ic9700");
 
@@ -21,10 +22,19 @@ const debounce = (callback, timeout) => {
 	let lastCall;
 
 	return (...args) => {
-		lastCall = Date.now();
+		end = true;
+
+		const id = uuid();
+		lastCall = id;
+
+		console.log("last call");
 
 		setTimeout(() => {
-			if(lastCall + timeout <= Date.now()) {
+			if(end == false) {
+				return;
+			}
+
+			if(lastCall === id) {
 				callback(...args);
 			}
 		}, timeout);
@@ -37,7 +47,11 @@ let buffer = [];
 
 let listening = false;
 
+let end = false
+
 radio.on("rx", () => {
+	end = false;
+
 	if(listening == true) {
 		return;
 	}
@@ -66,7 +80,7 @@ radio.on("rx_end", debounce(() => {
 	let oldBuffer = buffer;
 
 	readable._read = () => {
-		if(oldBuffer.length == 0) {
+		if(oldBuffer.length < 6) {
 			readable.push(null);
 			return;
 		}
@@ -98,4 +112,6 @@ radio.on("rx_end", debounce(() => {
 	console.log("rx_end");
 }, 1000));
 
-radio.setup();
+radio.setup().then(() => {
+	radio.endTransmit();
+});
